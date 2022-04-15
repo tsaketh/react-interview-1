@@ -1,3 +1,34 @@
-h1, p {
+body {
+  background-color: aquamarine;
+}
+h1,
+p {
   font-family: Lato;
+}
+.center-h {
+  width: fit-content;
+  margin: auto;
+}
+.drop-down,
+.user-input {
+  border: 2px solid blue;
+  border-radius: 5px;
+  padding: 2px;
+}
+.drop-down:hover {
+  cursor: pointer;
+}
+.dropdown-value:hover {
+  cursor: pointer;
+  background-color: blue;
+  color: white;
+}
+th {
+  text-align: start;
+  vertical-align: baseline;
+  background-color: skyblue;
+}
+td {
+  width: 40px;
+  background-color: lightseagreen;
 }

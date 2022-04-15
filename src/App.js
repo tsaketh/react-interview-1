@@ -5,6 +5,7 @@ import './style.css';
 export default function App() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
+  const [searchKey, setSearchKey] = useState('');
   const getUsers = () => {
     fetch('https://jsonplaceholder.typicode.com/users')
       .then((data) => data.json())
@@ -14,7 +15,11 @@ export default function App() {
       .catch((err) => alert(err));
   };
   const selectUser = (event) => {
-    setSelectedUser(event.target.value);
+    setSelectedUser(event?.target?.value || event);
+    setSearchKey('');
+  };
+  const search = (event) => {
+    setSearchKey(event.target.value);
   };
   useEffect(() => {
     getUsers();
@@ -24,46 +29,98 @@ export default function App() {
       {name}
     </option>
   ));
+  const userSpan = searchKey.length > 0 && (
+    <ul
+      style={{
+        listStyle: 'none',
+        marginTop: '0%',
+        padding: '1%',
+        border: '2px solid blue',
+        width: '100%',
+      }}
+      className="center-h"
+    >
+      {users
+        .filter(({ name }) =>
+          name.toLowerCase().includes(searchKey.toLowerCase())
+        )
+        .map(({ id, name }) => (
+          <li
+            className="dropdown-value"
+            key={id}
+            onClick={() => selectUser(id.toString())}
+          >
+            {name}
+          </li>
+        ))}
+    </ul>
+  );
   const userDetails = users
     .filter(({ id }) => id == selectedUser)
     .map(({ name, username, email, phone, website, address, company }) => {
       return (
-        <table>
-          <tr>
-            <th>Name:</th>
-            <td>{name}</td>
-          </tr>
-          <tr>
-            <th>Username:</th>
-            <td>{username}</td>
-          </tr>
-          <tr>
-            <th>Email:</th>
-            <td>{email}</td>
-          </tr>
-          <tr>
-            <th>Phone:</th>
-            <td>{phone}</td>
-          </tr>
-          <tr>
-            <th>Website:</th>
-            <td>{website}</td>
-          </tr>
-          <tr>
-            <th>Address:</th>
-            <td>{`${address.street}, ${address.suite}, ${address.city}, ${address.zipcode}, Coordinates: {${address.geo.lat}, ${address.geo.lng}}`}</td>
-          </tr>
-          <tr>
-            <th>Company:</th>
-            <td>{company.name}</td>
-          </tr>
+        <table
+          style={{
+            marginTop: '5%',
+            borderSpacing: '0',
+          }}
+          className="center-h"
+        >
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>:</th>
+              <td>{name}</td>
+            </tr>
+            <tr>
+              <th>Username</th>
+              <th>:</th>
+              <td>{username}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <th>:</th>
+              <td>{email}</td>
+            </tr>
+            <tr>
+              <th>Phone</th>
+              <th>:</th>
+              <td>{phone}</td>
+            </tr>
+            <tr>
+              <th>Website</th>
+              <th>:</th>
+              <td>{website}</td>
+            </tr>
+            <tr>
+              <th>Address</th>
+              <th>:</th>
+              <td>{`${address.street}, ${address.suite}, ${address.city}, ${address.zipcode}, Coordinates: {${address.geo.lat}, ${address.geo.lng}}`}</td>
+            </tr>
+            <tr>
+              <th>Company</th>
+              <th>:</th>
+              <td>{company.name}</td>
+            </tr>
+          </tbody>
         </table>
       );
     });
   return (
     <div>
-      <select onChange={selectUser}>{userElement}</select>
-      <h1>User selected: </h1>
+      <div className="center-h">
+        <h2>Demo application</h2>
+        <select className="center-h drop-down" onChange={selectUser}>
+          {userElement}
+        </select>
+        {/* <input
+          type="text"
+          className="center-h user-input"
+          style={{ marginTop: '5%', width: '100%' }}
+          onChange={search}
+        ></input>
+        {userSpan} */}
+      </div>
       {userDetails}
     </div>
   );
