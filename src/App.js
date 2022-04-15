@@ -100,7 +100,7 @@ export default function App() {
             <tr>
               <th>Company</th>
               <th>:</th>
-              <td>{company.name}</td>
+              <td>{`${company.name} - "${company.catchPhrase}-${company.bs}"`}</td>
             </tr>
           </tbody>
         </table>
