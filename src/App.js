@@ -90,7 +90,9 @@ export default function App() {
             <tr>
               <th>Website</th>
               <th>:</th>
-              <td><a href={`https://${website}`}>{website}</a></td>
+              <td>
+                <a href={`https://${website}`}>{website}</a>
+              </td>
             </tr>
             <tr>
               <th>Address</th>
